@@ -40,4 +40,4 @@ jobs:
     - name: kubectl
       run: kubectl get pods -A
     - name: Test with Maven
-      run: mvn compile test
+      run: mvn compile test --file StarlingUI-backend/pom.xml
