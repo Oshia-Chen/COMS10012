@@ -30,6 +30,7 @@ public class DesignControllerTest {
     @Autowired
     private WebApplicationContext wac;
 
+    private MockMvc mockMvc;
     private Design design;
 
     @Before
