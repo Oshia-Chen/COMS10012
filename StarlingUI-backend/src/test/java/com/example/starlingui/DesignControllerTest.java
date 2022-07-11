@@ -25,12 +25,50 @@ public class DesignControllerTest {
     @Autowired
     private WebApplicationContext wac;
 
-    private MockMvc mockMvc;
+    private Design design;
 
     @Before
     public void setUp() {
         mockMvc = MockMvcBuilders.webAppContextSetup(wac).build();
     }
+    
+    public void setDesign(){
+        design = new Design();
+        design.setName("kube-system");
+        List<Configuration> configList = new ArrayList<>();
+        Configuration configuration = new Configuration();
+        configuration.setName("deployment1");
+        configuration.setId("1000");
+        configuration.setKind("master");
+        HashMap<String, String> label = new HashMap<>();
+        label.put("app","starling");
+        configuration.setLabel(label);
+        Containers containers = new Containers();
+        containers.setName("nanajanashia/k8s-demo-app:v1.0");
+        containers.setCommand("");
+        containers.setArgs("");
+        List<Port> portList = new ArrayList<>();
+        Port port = new Port();
+        port.setContainerPort(3000);
+        portList.add(port);
+        containers.setPort(portList);
+        List<Containers> containerList = new ArrayList<>();
+        containerList.add(containers);
+        configuration.setContainers(containerList);
+        configList.add(configuration);
+
+        design.setConfig(configList);
+
+        List<Mapping> mappingList = new ArrayList<>();
+        Mapping mapping = new Mapping();
+        mapping.setNodeID("1000");
+        ArrayList<String> mappedDrones = new ArrayList<>();
+        mappedDrones.add("minikube");
+        mapping.setMappedDrones(mappedDrones);
+        mappingList.add(mapping);
+        design.setMapping(mappingList);
+    }
+
 
 
     @Test
@@ -71,4 +109,15 @@ public class DesignControllerTest {
                 .andReturn().getResponse().getContentAsString();
 
     }
+    
+    @Test
+    public void testTemplating() {
+        try {
+            TemplatingServiceImp templating = new TemplatingServiceImp();
+            String message = templating.doTemplating(design);
+            System.out.println(message);
+        }catch(Exception e){
+            System.out.println("Deploy fail :"+ e.getMessage());
+        }
+    }   
 }
