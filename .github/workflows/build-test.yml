@@ -43,3 +43,7 @@ jobs:
       run: kubectl get nodes -A
     - name: Test with Maven
       run: mvn compile test --file StarlingUI-backend/pom.xml
+    - name: kubectl get pods again
+      run: kubectl get pods -A
+    - name: kubectl get deployment
+      run: kubectl get deployment -A
