@@ -1,9 +1,14 @@
 package com.example.starlingui;
 
-import com.example.starlingui.model.User;
+import com.example.starlingui.model.*;
+import com.example.starlingui.service.TemplatingServiceImp;
 import com.google.gson.Gson;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
